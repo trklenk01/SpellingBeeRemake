@@ -1,40 +1,107 @@
-# 🐝 Spelling Bee (Java Console Game)
+Spelling Bee (Java Console Game)
+================================
 
-A command-line recreation of the **New York Times “Spelling Bee”** word game, written entirely in Java.  
-Players are given seven random letters (the *hive*) and must find as many valid words as possible that:
-- Are **at least 4 letters long**  
-- Contain **only** letters from the hive  
-- Always include the **center letter**
+A command-line recreation of the New York Times "Spelling Bee" game written in Java.
 
----
+Players are given seven random letters (the hive) and must find as many valid words as possible that:
+- Are at least 4 letters long
+- Contain only letters from the hive
+- Always include the center letter
 
-## ✨ Features
-- **Weighted letter generation** using real English frequency data — vowels are more common, Zs are rare.  
-- **Hive validation**: each hive is guaranteed to contain at least one vowel.  
-- **Dictionary filtering** powered by the [enable1 word list](https://github.com/dwyl/english-words/blob/master/words.txt) (a large public domain English word set).  
-- **Bitmask-based word checking** for fast letter inclusion tests.  
-- **Automatic scoring**:
-  - 4-letter words → 1 point  
-  - 5+ letters → 1 point per letter  
-  - *Pangram* (uses all 7 letters) → +7 bonus points  
-- Tracks found words, prevents duplicates, and displays your score in real time.
+-----------------------------------
+Features
+-----------------------------------
+- Weighted letter generation using English letter frequencies
+- Hive validation to guarantee at least one vowel
+- Dictionary filtering using the enable1 word list
+- Fast bitmask-based letter checks
+- Automatic scoring:
+  • 4-letter words = 1 point
+  • 5+ letters = word length points
+  • Pangram (uses all 7 letters) = +7 bonus
+- Tracks found words and prevents duplicates
 
----
+-----------------------------------
+Project Layout
+-----------------------------------
+SpellingBeeRemake/
+│
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── SpellingBee.java
+│       └── resources/
+│           └── enable1.txt
+│
+├── README.txt
+└── LICENSE
 
-## 🧩 How It Works
-1. **Hive generation** – seven random letters are chosen based on frequency weighting; at least one vowel is guaranteed.  
-2. **Dictionary filtering** – `enable1.txt` is scanned, keeping only words that can be built from the hive and include the center letter.  
-3. **Gameplay loop** – users input guesses in the console; guesses are validated, scored, and added to the found set.  
-4. **Bitmasking** – each word is represented as a 26-bit integer mask to check legality in O(1).
+-----------------------------------
+Requirements
+-----------------------------------
+- Java 17 or newer (earlier versions likely work)
+- enable1.txt file located at src/main/resources/enable1.txt
 
----
+-----------------------------------
+How to Compile and Run
+-----------------------------------
 
-## 🖥️ Running the Game
-### Prerequisites
-- Java 17+ (earlier versions likely work)
-- `enable1.txt` word list file (place it in the same directory as the `.java` file)
+1. Open a terminal or PowerShell window in the project root
+   (the folder that contains the "src" directory).
 
-### Compile and run
-```bash
-javac SpellingBee.java
-java SpellingBee
+2. Compile the program into an "out" directory:
+
+   Windows / PowerShell:
+       javac -d out src\main\java\SpellingBee.java
+
+   macOS / Linux:
+       javac -d out src/main/java/SpellingBee.java
+
+3. Run the program and include both compiled classes and resources in the classpath:
+
+   Windows / PowerShell:
+       java -cp "out;src\main\resources" SpellingBee
+
+   macOS / Linux:
+       java -cp "out:src/main/resources" SpellingBee
+
+   (Quotes are required in PowerShell because the semicolon ';' separates commands.)
+
+4. Play the game in the console!
+
+-----------------------------------
+Example Session
+-----------------------------------
+[H, I, L, E, A, T, S]  Center letter is: E
+Maximum possible score is: 265
+
+Score: 0
+Guess a word
+> LATE
+Correct! Score +4
+
+Score: 4
+Guess a word
+> TILES
+Correct! Score +5
+
+-----------------------------------
+Common Issues
+-----------------------------------
+- If you see "Error reading resource enable1.txt":
+  Make sure the file is located at src/main/resources/enable1.txt
+  and that you are running from the project root with the correct classpath.
+
+- If you see "The module 'src' could not be loaded" in PowerShell:
+  Use quotes around the classpath as shown above.
+
+-----------------------------------
+License
+-----------------------------------
+This project is released under the MIT License. You are free to use, modify,
+and distribute this software with attribution.
+
+-----------------------------------
+Author
+-----------------------------------
+Developed by Thomas Klenk
