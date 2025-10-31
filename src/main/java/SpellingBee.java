@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Scanner;
 import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
@@ -164,27 +165,25 @@ public class SpellingBee {
             throw new IllegalStateException("Center must be A - Z");
         }
         centerBit = 1 << (center - 'A');
-    try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("enable1.txt"), StandardCharsets.UTF_8))){ 
-        String line;
-        while((line = reader.readLine()) != null){
-            if (line.length() >= 4){
-                int wordMask = getMaskFromWord(line);
-                if ((wordMask & ~hiveMask) == 0){
-                    if((wordMask & centerBit) !=0 ){
+        try (InputStream in = SpellingBee.class.getResourceAsStream("/enable1.txt")) {
+            if (in == null) {
+                throw new IOException("Resource '/enable1.txt' not found on classpath. " + "Make sure it's in src/main/resources/");
+            }
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // (Optional) normalize once
+                if (line.length() >= 4) {
+                    int wordMask = getMaskFromWord(line);
+                    if ((wordMask & ~hiveMask) == 0 && (wordMask & centerBit) != 0) {
                         dictionary.add(line.toUpperCase());
                     }
-                }
             }
-            
-            else{
-                continue;
-            }
-            
         }
-        
-    } catch(IOException e){
-        System.out.println("Error reading file.");
     }
+} catch (IOException e) {
+    System.out.println("Error reading resource enable1.txt: " + e.getMessage());
+}
     
     return dictionary;
     }
