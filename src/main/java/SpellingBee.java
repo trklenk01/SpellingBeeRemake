@@ -164,7 +164,7 @@ public class SpellingBee {
             throw new IllegalStateException("Center must be A - Z");
         }
         centerBit = 1 << (center - 'A');
-    try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("src/main/resources/enable1.txt"), StandardCharsets.UTF_8))){ 
+    try(BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("enable1.txt"), StandardCharsets.UTF_8))){ 
         String line;
         while((line = reader.readLine()) != null){
             if (line.length() >= 4){
